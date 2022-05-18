@@ -20,16 +20,19 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(JobController::class)->group(function () {
-        Route::get('/jobs', 'index')->name('jobs');
-        Route::get('/jobs/{job}', 'show');
-        Route::post('/jobs', 'store');
-        Route::delete('/jobs/{job}','delete');
+        Route::get('/jobs', 'index')->name('jobs.index');
+        Route::get('/jobs/create', 'create')->name('jobs.create');
+        Route::get('/jobs/{job}', 'show')->name('jobs.show');
+        Route::post('/jobs', 'store')->name('jobs.store');
+        Route::get('/jobs/{job}/edit', 'edit')->name('jobs.edit');
+        Route::put('/jobs/{job}', 'update')->name('jobs.update');
+        Route::delete('/jobs/{job}','destroy')->name('jobs.destroy');
     });
     Route::controller(UserController::class)->group(function () {
-        Route::get('/users', 'index')->name('users');
-        Route::get('/users/{user}', 'show');
-        Route::post('/users', 'store');
-        Route::delete('/users/{user}', 'delete');
+        Route::get('/users', 'index')->name('users.index');
+        Route::get('/users/{user}', 'show')->name('users.show');
+        Route::post('/users', 'store')->name('users.store');
+        Route::delete('/users/{user}', 'destroy')->name('users.destroy');
     });
 });
 

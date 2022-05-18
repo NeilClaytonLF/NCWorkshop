@@ -14,7 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            $table->id();
+            $table->id()->index();
+            $table->string('title');
+            $table->text('description');
+            $table->foreignId('user_id')->constrained('users');
+            $table->enum('state', ['pending','in_progress','quality_assurance','complete']);
             $table->timestamps();
         });
     }
