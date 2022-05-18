@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{JobController, UserController};
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return to_route('login');
 });
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::controller(JobController::class)->group(function () {
+        Route::get('/jobs', 'index')->name('jobs.index');
+        Route::get('/jobs/create', 'create')->name('jobs.create');
+        Route::get('/jobs/{job}', 'show')->name('jobs.show');
+        Route::post('/jobs', 'store')->name('jobs.store');
+        Route::get('/jobs/{job}/edit', 'edit')->name('jobs.edit');
+        Route::put('/jobs/{job}', 'update')->name('jobs.update');
+        Route::delete('/jobs/{job}','destroy')->name('jobs.destroy');
+    });
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/users', 'index')->name('users.index');
+        Route::get('/users/{user}', 'show')->name('users.show');
+        Route::post('/users', 'store')->name('users.store');
+        Route::delete('/users/{user}', 'destroy')->name('users.destroy');
+    });
+});
+
+require __DIR__.'/auth.php';
