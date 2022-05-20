@@ -9,7 +9,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <div id="kanban"></div>
+                    <a href="/jobs/create" class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >Add Job</a>
+                    <div class="mt-4" id="kanban"></div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <x-back-button />
             {{ __('Create Job') }}
         </h2>
     </x-slot>
@@ -24,32 +25,32 @@
                     @endif
                     <form action="/jobs" method="POST">
                         @csrf
-                        <div class="form-control mb-4">
+                        <div class="form-control">
                             <label class="block" for="title">Title:</label>
-                            <input type="text" name="title">
+                            <input type="text" name="title" class="block mt-1 w-full">
                         </div>
-                        <div class="form-control mb-4">
+                        <div class="form-control mt-4">
                             <label class="block" for="description">Description:</label>
-                            <input type="text" rows="10" name="description" value="{{ old('description') }}">
+                            <input type="text" rows="10" name="description" value="{{ old('description') }}" class="block mt-1 w-full">
                         </div>
-                        <div class="form-control mb-4">
+                        <div class="form-control mt-4">
                             <label class="block" for="state">State:</label>
-                            <select name="state" id="state">
+                            <select name="state" id="state" class="block mt-1 w-full">
                                 @foreach ($states as $key => $value)
                                     <option value="{!! $key !!}">{!! $value !!}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-control mb-4">
+                        <div class="form-control mt-4">
                             <label class="block" for="user_id">Assign to:</label>
-                            <select name="user_id" id="user_id">
+                            <select name="user_id" id="user_id" class="block mt-1 w-full">
                                 @foreach ($users as $user)
                                     <option value="{!! $user["id"] !!}" @if (old('user_id') == $user["id"]) selected="selected" @endif>{!! $user["name"] !!}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-control">
-                            <button class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Save</button>
+                        <div class="flex items-center justify-end mt-4">
+                            <button class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Save Job</button>
                         </div>
                     </form>
                 </div>
