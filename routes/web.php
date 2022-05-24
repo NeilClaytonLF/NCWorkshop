@@ -20,13 +20,14 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(JobController::class)->group(function () {
-        Route::get('/jobs', 'index')->name('jobs.index');
+        Route::get('/jobs', 'kanban')->name('jobs.index');
         Route::get('/jobs/create', 'create')->name('jobs.create');
         Route::get('/jobs/{job}', 'show')->name('jobs.show');
         Route::post('/jobs', 'store')->name('jobs.store');
         Route::get('/jobs/{job}/edit', 'edit')->name('jobs.edit');
         Route::put('/jobs/{job}', 'update')->name('jobs.update');
         Route::delete('/jobs/{job}','destroy')->name('jobs.destroy');
+        Route::get('/jobs/kandban', 'kanban')->name('jobs.kanban');
     });
     Route::controller(UserController::class)->group(function () {
         Route::get('/users', 'index')->name('users.index');

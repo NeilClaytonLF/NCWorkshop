@@ -30,14 +30,14 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
-        
+
         $validated = $request->validate([
             'title' => 'required|max:255',
             'state' => 'required',
             'user_id' => 'required',
         ]);
         $formValues = $request->post();
-        
+
         Job::create([
             'title' => $formValues['title'],
             'description' => $formValues['description'],
@@ -50,7 +50,7 @@ class JobController extends Controller
 
     }
 
-    public function show($id) 
+    public function show($id)
     {
         $job = Job::findOrFail($id);
         return view('jobs.show')->with('job', $job);
@@ -65,7 +65,7 @@ class JobController extends Controller
     }
 
     public function update($id, Request $request)
-    {   
+    {
         $validated = $request->validate([
             'title' => 'required|max:255',
             'state' => 'required',
@@ -87,5 +87,40 @@ class JobController extends Controller
         $job = Job::findOrFail($id);
         $job->delete();
         return to_route('jobs.index');
+    }
+
+    public function updateJobState(string $jobId, string $state)
+    {
+        $job = Job::findOrFail($jobId);
+        $job->state = $state;
+        $job->save();
+    }
+
+    public function kanban()
+    {
+        $tasks = [];
+        $columns = [];
+
+        $columnStates = Job::getEnumValues('state');
+
+        foreach ($columnStates as $key => $value)
+        {
+            $columns[$key] = [
+                'id' => $key,
+                'title' => $value,
+                '$tasks'=> ''
+            ];
+        }
+
+        $jobs = Job::all();
+
+        foreach ($jobs as $job)
+        {
+            $tasks[$job->id] = [
+                'id' => $job->id,
+                'content' => $job->title
+            ];
+            array_push($columns[$job->state]['taskIds'][], strval($job->id));
+        }
     }
 }
